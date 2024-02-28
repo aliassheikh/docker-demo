@@ -1,0 +1,5 @@
+services:
+  application:
+    image: ${DOCKER_USERNAME}/docker-demo-service
+    ports:
+      - "9090:9090"

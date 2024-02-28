@@ -10,9 +10,9 @@ def read_root():
 @app.get("/get")
 def make_request(path: str):
     client = RequestClient()
-    return client.get(path=path)
+    return client.get(path=path).json()
 
 @app.get("/chucknorris")
 def chuck_norris_quote():
     client = RequestClient()
-    return client.chuck()
+    return client.chuck().json()

@@ -10,7 +10,7 @@ class RequestClient:
         return response
 
     def get(self, path, params=None):
-        return self._request(method='get', path=path, params=params).json()
+        return self._request(method='get', path=path, params=params)
     
     def chuck(self, path='https://api.chucknorris.io/jokes/random', params=None):
-        return self._request(method='get', path=path, params=params).json()
+        return self._request(method='get', path=path, params=params)

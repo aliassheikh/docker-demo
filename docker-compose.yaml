@@ -1,12 +1,24 @@
+# A docker-compose file is a way to instruct the Docker API, and override certain commands. It should be in Yaml.
 services:
+# Services define which containers should run. In this case - there is only application.
   application:
     build:
+      # Build directives control how the image is built. In this case; the context is all files in/under
+      # the current directory, as specified in Dockerfile.
       context: .
       dockerfile: Dockerfile
+    # Container name. Note - this natively listens to .env file.
     container_name: ${CONTAINER_NAME}
-    image: thomasve/docker-demo-service
+    # The image name which should be built. This can be used for (local) caching, as well as which
+    # registry to push to
+    image: ${DOCKER_USERNAME}/docker-demo-service
+    # The command that should be run. While we do this in Dockerfile, it's nicer to give the developer
+    # an easy way to override it.
     command: ["uvicorn", "main:app", "--reload", "--proxy-headers", "--host", "0.0.0.0", "--port", "${PORT}"]
+    # Volumes mount a given folder inside a different place in the Docker container. This syncs
+    # continuously, and processes inside the container observe this. Note the --reload flag, for instance
     volumes:
       - "./${APPLICATION_DIR}:/root/${APPLICATION_DIR}"
+    # Ports are a mapping which connect an internal port to a port on your machine.
     ports:
       - "${PORT}:${PORT}"
